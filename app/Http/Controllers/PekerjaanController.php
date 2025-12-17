@@ -34,9 +34,9 @@ class PekerjaanController extends Controller
         $data->deskripsi = $request->deskripsi;
 
         if ($data->save()) {
-            return redirect()->route('pekerjaan.index')->with('success', 'Data berhasil ditambahkan');
+            return redirect()->route('pekerjaan.index')->with('berhasil', 'Data berhasil ditambahkan');
         } else {
-            return redirect()->route('pekerjaan.index')->with('success', 'Data tidak tersimpan');
+            return redirect()->route('pekerjaan.index')->with('gagal', 'Data tidak tersimpan');
         }
     }
 
@@ -59,14 +59,14 @@ class PekerjaanController extends Controller
         $data->deskripsi = $request->deskripsi;
 
         if ($data->save()) {
-            return redirect()->route('pekerjaan.index')->with('success', 'Data tersimpan');
+            return redirect()->route('pekerjaan.index')->with('berhasil', 'Data tersimpan');
         } else {
-            return redirect()->route('pekerjaan.index')->with('success', 'Data tidak tersimpan');
+            return redirect()->route('pekerjaan.index')->with('gagal', 'Data tidak tersimpan');
         }
     }
 
     public function destroy(Request $request) {
         Pekerjaan::findOrFail($request->id)->delete();
-        return redirect()->route('pekerjaan.index')->with('success', 'Data terhapus');
+        return redirect()->route('pekerjaan.index')->with('delete', 'Data terhapus');
     }
 }

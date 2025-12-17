@@ -2,6 +2,40 @@
 @section('title','Pekerjaan')
 @section('menupekerjaan', 'underline decoration-4 underline-offset-7')
 @section('content')
+
+{{-- bagian alert --}}
+@if (session('berhasil'))
+    <div class="mb-4 flex justify-between rounded-lg bg-green-50 p-4 text-sm text-green-800" role="alert">
+        <div>
+            {{ session('berhasil') }}
+        </div>
+        <button type="button" class="ml-auto text-green-800 hover:text-green-900 font-bold" onclick="this.parentElement.style.display='none'">
+            &times; </button>
+    </div>
+@endif
+
+@if (session('delete'))
+    <div class="mb-4 flex justify-between rounded-lg bg-red-50 p-4 text-sm text-red-800" role="alert">
+        <div>
+            {{ session('delete') }}
+        </div>
+        <button type="button" class="ml-auto text-red-800 hover:text-red-900 font-bold" onclick="this.parentElement.style.display='none'">
+            &times; </button>
+    </div>
+@endif
+
+@if (session('gagal'))
+    <div class="mb-4 flex justify-between rounded-lg bg-red-50 p-4 text-sm text-red-800" role="alert">
+        <div>
+            {{ session('gagal') }}
+        </div>
+        <button type="button" class="ml-auto text-red-800 hover:text-red-900 font-bold" onclick="this.parentElement.style.display='none'">
+            &times; </button>
+    </div>
+@endif
+{{-- akhir bagian alert --}}
+
+
     <section class="p-4 bg-white rounded-lg min-h-[50vh]">
         <h1 class="text-3xl font-bold text-[#C0392B] mb-6 text-center">Pekerjaan</h1>
         <div class="mx-auto max-w-screen-xl">
