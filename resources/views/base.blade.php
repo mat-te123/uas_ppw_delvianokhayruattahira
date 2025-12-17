@@ -108,9 +108,9 @@
                 <div>
                     <div class="text-white text-right">
                         <h2 class="mb-2 text-sm font-semibold uppercase">Identitas Mahasiswa</h2>
-                        <p>Nama Saya</p>
-                        <p>NIM Saya</p>
-                        <p>Kelas Praktikum</p>
+                        <p>Delviano Khayru Attahira</p>
+                        <p>24/543732/SV/25259</p>
+                        <p>A2</p>
                     </div>
                 </div>
             </div>
