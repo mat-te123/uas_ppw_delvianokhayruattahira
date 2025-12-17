@@ -52,7 +52,7 @@
 
 <nav class="bg-gray-100 border-b-4 border-[#C0392B]">
     <div class="max-w-screen-xl flex flex-wrap gap-3 items-center justify-between mx-auto p-4">
-        <a href="#" class="flex items-center space-x-2 rtl:space-x-reverse">
+        <a href="{{ route('index') }}" class="flex items-center space-x-2 rtl:space-x-reverse">
             <img src="{{ asset('img/logo.png') }}" class="h-12" alt="Logo UGM"/>
             <div class="flex flex-col leading-tight">
                 <span class="text-lg md:text-xl font-bold text-[#631913]">Delviano Khayru Attahira</span>
