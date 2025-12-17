@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pekerjaan;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -14,9 +15,11 @@ class PekerjaanController extends Controller
     public function index(Request $request) {
         $Pagination = 5;
         $keyword = $request->get('keyword');
-        $data = Pekerjaan::when($keyword, function ($query) use ($keyword) {
-            $query->where('nama', 'like', "%{$keyword}%")->orWhere('deskripsi', 'like', "%{$keyword}%");
+        $data = Pekerjaan::withCount('pegawai')->when($keyword, function ($query) use ($keyword) {
+            $query->where('nama', 'like', "%{$keyword}%")
+                  ->orWhere('deskripsi', 'like', "%{$keyword}%");
         })->paginate($Pagination);
+        
         return view('pekerjaan.index', compact('data'));
     }
 

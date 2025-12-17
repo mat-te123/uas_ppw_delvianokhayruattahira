@@ -9,11 +9,11 @@ class Pekerjaan extends Model
 {
 
     use SoftDeletes;
-    
+
     protected $table = 'pekerjaan';
 
     public function pegawai()
     {
-        return $this->hasMany(Pegawai::class);
+        return $this->hasMany(Pegawai::class, "pekerjaan_id", "id");
     }
 }

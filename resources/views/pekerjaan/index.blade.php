@@ -67,7 +67,7 @@
                             <td class="px-4 py-3">{{ $data->firstitem() + $k }}</td>
                             <td class="px-4 py-3 font-medium text-gray-900">{{ $d->nama }}</td>
                             <td class="px-4 py-3 text-gray-600">{{ $d->deskripsi }}</td>
-                            <td class="px-4 py-3 text-gray-600">{{ 100 }}</td>
+                            <td class="px-4 py-3 text-gray-600">{{ $d->pegawai_count }} orang</td>
                             <td class="px-4 py-3 text-center text-gray-600">
                                 <div class="inline-flex rounded-md shadow-sm" role="group">
                                     <a href="{{ route('pekerjaan.edit', ['id' => $d->id]) }}" class="cursor-pointer rounded-l-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50">

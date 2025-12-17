@@ -21,6 +21,19 @@
 @push('js')
     <script src="{{ asset('plugins/chartjs-4/chart-4.5.0.js') }}"></script>
     <script>
+        const genderData = [
+            {{ $TotalGenderPegawai['male'] }},
+            {{ $TotalGenderPegawai['female'] }}
+        ]
+
+        <?php
+            $top5Pekerjaan = $TotalPekerjaanberdasarkanPegawai->sortByDesc('pegawai_count')->take(5);
+        ?>
+
+        const pekerjaanLabels = {!! $top5Pekerjaan->pluck('nama') !!};
+        const pekerjaanData   = {!! $top5Pekerjaan->pluck('pegawai_count') !!};
+
+
         const ctx1 = document.getElementById('chart1');
         new Chart(ctx1, {
             type: 'pie',
@@ -28,7 +41,7 @@
                 labels: ["Male", "Female"],
                 datasets: [{
                     label: 'Jumlah',
-                    data: [4644,4800],
+                    data: genderData,
                     backgroundColor: [
                         '#3b82f6',
                         '#ec4899'
@@ -54,16 +67,10 @@
         new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: [
-                    "Software Engineer",
-                    "Data Analyst",
-                    "Project Manager",
-                    "System Administrator",
-                    "UI/UX Designer"
-                ],
+                labels: pekerjaanLabels,
                 datasets: [{
                     label: 'Jumlah Pegawai',
-                    data: [110, 95, 85, 75, 70],
+                    data: pekerjaanData,
                     backgroundColor: '#C0392B',
                     borderColor: '#922B21',
                     borderWidth: 1,
