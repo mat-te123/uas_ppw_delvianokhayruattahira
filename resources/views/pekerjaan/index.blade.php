@@ -64,7 +64,7 @@
                     <tbody class="divide-y divide-gray-100 bg-white">
                         @forelse($data as $k => $d)
                         <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3">{{ $k+1 }}</td>
+                            <td class="px-4 py-3">{{ $data->firstitem() + $k }}</td>
                             <td class="px-4 py-3 font-medium text-gray-900">{{ $d->nama }}</td>
                             <td class="px-4 py-3 text-gray-600">{{ $d->deskripsi }}</td>
                             <td class="px-4 py-3 text-gray-600">{{ 100 }}</td>
@@ -87,7 +87,11 @@
                         kosong
                         @endforelse
                     </tbody>
+
                 </table>
+            </div>
+            <div class="mt-4">
+                {{ $data->links() }}
             </div>
 
         </div>

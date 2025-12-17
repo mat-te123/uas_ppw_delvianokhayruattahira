@@ -9,11 +9,14 @@ use Illuminate\Validation\Rule;
 
 class PekerjaanController extends Controller
 {
+
+    
     public function index(Request $request) {
+        $Pagination = 5;
         $keyword = $request->get('keyword');
         $data = Pekerjaan::when($keyword, function ($query) use ($keyword) {
             $query->where('nama', 'like', "%{$keyword}%")->orWhere('deskripsi', 'like', "%{$keyword}%");
-        })->get();
+        })->paginate($Pagination);
         return view('pekerjaan.index', compact('data'));
     }
 
