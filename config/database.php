@@ -32,10 +32,10 @@ return [
     'connections' => [
 
         'sqlite' => [
-            'driver' => 'mysql',
+            'driver' => 'sqlite',
             'url' => env('DB_URL'),
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => 'DelvianoKhayru_543732_',
+            'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
             'busy_timeout' => null,
             'journal_mode' => null,
@@ -53,7 +53,7 @@ return [
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => env('DB_CHARSET', 'utf8mb4'),
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
-            'prefix' => env('DB_TABLE_PREFIX', ''),
+            'prefix' => env('DB_TABLE_PREFIX', 'DelvianoKhayru_543732_'),
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
