@@ -42,6 +42,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    {{-- captcha google --}}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
     @stack('css')
 </head>
 <body role="main">

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Pegawai;
 use App\Models\Pekerjaan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class PegawaiController extends Controller
 {
@@ -17,11 +18,12 @@ class PegawaiController extends Controller
         $keyword = $request->get('keyword');
         $data = Pegawai::with('pekerjaan')->when($keyword, function ($query) use ($keyword) {
             $query->where('nama', 'like', "%{$keyword}%")
-                  ->orWhere('email', 'like', "%{$keyword}%")
-                  ->orWhereHas('pekerjaan', function ($q) use ($keyword) {
-                      $q->where('nama', 'like', "%{$keyword}%");
-                  });
+                ->orWhere('email', 'like', "%{$keyword}%")
+                ->orWhereHas('pekerjaan', function ($q) use ($keyword) {
+                    $q->where('nama', 'like', "%{$keyword}%");
+                });
         })->paginate($pagination);
+
         return view('pegawai.index', compact('data'));
         //
     }
@@ -29,9 +31,10 @@ class PegawaiController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function add() 
+    public function add()
     {
         $pekerjaan = Pekerjaan::all();
+
         return view('pegawai.add', compact('pekerjaan'));
     }
 
@@ -41,14 +44,28 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string',
-            'pekerjaan_id' => 'required|exists:pekerjaan,id',
+            'nama' => 'required',
             'email' => 'required|email|unique:pegawai,email',
+            'pekerjaan_id' => 'required|exists:pekerjaan,id',
             'gender' => 'required|in:male,female',
+
+            'g-recaptcha-response' => ['required', function ($attribute, $value, $fail) {
+                $response = Http::withoutVerifying()->asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                    'secret' => env('RECAPTCHA_SECRET_KEY'),
+                    'response' => $value,
+                    'remoteip' => request()->ip(),
+                ]);
+
+                if (! $response->json('success')) {
+                    $fail('Verifikasi gagal, silakan coba lagi.');
+                }
+            }],
+        ], [
+            'g-recaptcha-response.required' => 'Silakan verifikasi bahwa Anda bukan robot.',
+            'email.unique' => 'Email sudah digunakan pada pegawai lain.',
         ]);
 
-
-        $data = new Pegawai();
+        $data = new Pegawai;
         $data->nama = $request->nama;
         $data->pekerjaan_id = $request->pekerjaan_id;
         $data->email = $request->email;
@@ -60,7 +77,6 @@ class PegawaiController extends Controller
             return redirect()->route('pegawai.index')->with('gagal', 'Data tidak tersimpan');
         }
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -80,11 +96,10 @@ class PegawaiController extends Controller
     {
         $request->validate([
             'nama' => 'required|string',
-            'pekerjaan_id' => 'required|exists:pekerjaan,id',
-            'email' => 'required|email|unique:pegawai,email,' . $request->id,
+            'pekerjaan_id' => 'required|exists:DelvianoKhayru_543732_pekerjaan,id',
+            'email' => 'required|email|unique:DelvianoKhayru_543732_pegawai,email,'.$request->id,
             'gender' => 'required|in:male,female',
         ]);
-
 
         $data = Pegawai::findOrFail($request->id);
         $data->nama = $request->nama;
@@ -105,6 +120,7 @@ class PegawaiController extends Controller
     public function destroy(Request $request)
     {
         Pegawai::findOrFail($request->id)->delete();
+
         return redirect()->route('pegawai.index')->with('delete', 'Data terhapus');
     }
 }

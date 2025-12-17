@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\MainController::class, 'index'])->name('index');
 
+// debug
+Route::get('/cek-info', function () {
+    phpinfo();
+});
+
 Route::prefix('/pekerjaan')->group(function () {
     Route::get('/', [App\Http\Controllers\PekerjaanController::class, 'index'])->name('pekerjaan.index');
     Route::get('/add', [App\Http\Controllers\PekerjaanController::class, 'add'])->name('pekerjaan.add');
